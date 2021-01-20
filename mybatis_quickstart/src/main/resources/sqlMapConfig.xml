@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!-- 加载properties文件 -->
+    <properties resource="jdbc.properties"></properties>
+
+    <!-- 设置别名 -->
+    <typeAliases>
+        <!-- 方式一：给单个实体起别名 -->
+        <!--<typeAlias type="com.lagou.domain.User" alias="user"></typeAlias>-->
+        <!-- 方式二：批量起别名，别名就是类名，且不区分大小写-->
+        <package name="com.lagou.domain"/>
+    </typeAliases>
+
+    <!-- enviroments:运行环境 -->
+    <environments default="development">
+        <!-- 可以有多个environment，对应不同开发环境 -->
+        <environment id="development">
+            <!-- 当前的事务交由JDBC管理 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 数据源信息
+            POOLED：使用mybatis的连接池
+            UNPOOLED：不使用连接池，每一次获取都是/新的连接
+             -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <!-- 第三个斜杠是根目录的意思，即"localhost:3306/" -->
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 引入映射配置文件 -->
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"></mapper>
+    </mappers>
+
+</configuration>
